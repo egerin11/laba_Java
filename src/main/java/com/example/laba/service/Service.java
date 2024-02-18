@@ -1,9 +1,7 @@
 package com.example.laba.service;
 
-import org.springframework.stereotype.Service;
-
-@Service
-public abstract class Services {
+@org.springframework.stereotype.Service
+public abstract class Service {
     public abstract String getInf(String action);
 }
 
