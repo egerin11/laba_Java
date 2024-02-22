@@ -42,14 +42,12 @@ public class CatService implements Services {
                     String coat = catNode.get("coat").asText();
                     String pattern = catNode.get("pattern").asText();
                     Cat cat = new Cat(breed, country, origin, coat, pattern);
-                    System.out.println(cat);
                     catRepository.saveCat(cat);
                 } else if (action.equals("facts")) {
 
                     String fact = catNode.get("fact").asText();
                     int length = catNode.get("length").asInt();
                     CatFact catFact = new CatFact(fact, length);
-                    System.out.println(catFact);
                     catInfRepository.saveCatFact(catFact);
                 }
             }
