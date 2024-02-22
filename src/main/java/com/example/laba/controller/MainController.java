@@ -5,13 +5,11 @@ import com.example.laba.model.CatFact;
 import com.example.laba.repository.CatInfRepository;
 import com.example.laba.repository.CatRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@ControllerAdvice
 @RestController
 @RequestMapping("/api/v1")
 @AllArgsConstructor
@@ -32,9 +30,9 @@ public class MainController {
     }
 
     @GetMapping("/cats/{action}")
-    public String getInf(@PathVariable String action) {
+    public ResponseEntity<String> getInf(@PathVariable String action) {
 
-        return catController.getRandomCatFact(action);
+        return ResponseEntity.ok(catController.getRandomCatFact(action));
     }
 
 }
