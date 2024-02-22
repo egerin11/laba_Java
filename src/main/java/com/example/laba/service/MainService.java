@@ -1,20 +1,24 @@
 package com.example.laba.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.AllArgsConstructor;
+
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
+
+
 @Service
+@AllArgsConstructor
 public class MainService {
     private final CatService catService;
-
-    @Autowired
-    public MainService(CatService catService) {
-        this.catService = catService;
-    }
 
     public String getInf(String action) {
         return catService.getInf(action);
     }
-
+    @SneakyThrows
+    public void catInf(String action){
+        catService.saveInfCat(action);
+    }
 
 }

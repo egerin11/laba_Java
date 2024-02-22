@@ -1,5 +1,9 @@
 package com.example.laba.model;
 
+
+import lombok.Data;
+
+@Data
 public class Cat {
 
     private String breed;
@@ -7,6 +11,11 @@ public class Cat {
     private String origin;
     private String coat;
     private String pattern;
+
+    @Override
+    public String toString() {
+        return breed + country + origin + coat + pattern;
+    }
 
     public Cat() {
     }

@@ -10,4 +10,5 @@ public class LabaApplication {
 		SpringApplication.run(LabaApplication.class, args);
 	}
 
+
 }
