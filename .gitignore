@@ -31,4 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
-/test
+
+
+/test/java/com.example.laba/LabaApplicationTests.java
