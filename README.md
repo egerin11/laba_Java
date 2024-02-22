@@ -13,5 +13,5 @@ ____
 [Cat Fact Api](https://catfact.ninja/)
 ## GET-запросы
 > http://localhost:8080/api/v1/cats/facts получить факты о котах
-> http://localhost:8080/api/v1cats/breeds получить породы котов 
+> http://localhost:8080/api/v1/cats/breeds получить породы котов 
 ____
