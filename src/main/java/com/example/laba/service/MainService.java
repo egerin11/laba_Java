@@ -7,7 +7,6 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 
-
 @Service
 @AllArgsConstructor
 public class MainService {
@@ -16,9 +15,12 @@ public class MainService {
     public String getInf(String action) {
         return catService.getInf(action);
     }
+
     @SneakyThrows
-    public void catInf(String action){
+    public void catInf(String action) {
         catService.saveInfCat(action);
     }
+
+
 
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/cats")
 @AllArgsConstructor
-
 public class CatController {
 
     private final MainService mainService;

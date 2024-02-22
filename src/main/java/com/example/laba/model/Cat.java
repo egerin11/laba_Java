@@ -1,11 +1,12 @@
 package com.example.laba.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class Cat {
-
+    @JsonProperty("breeds")
     private String breed;
     private String country;
     private String origin;
