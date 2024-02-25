@@ -45,13 +45,16 @@ src/
 
 ### Intellij ###
 # User-specific stuff
+.idea
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/**/contentModel.xml
-
+.mvn
+mvnw
+mvnw.cmd
 # SonarLint plugin
 .idea/sonarlint/
 laba.iml
