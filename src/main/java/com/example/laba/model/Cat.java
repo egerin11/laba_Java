@@ -1,12 +1,6 @@
 package com.example.laba.model;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-
-@Data
 public class Cat {
-    @JsonProperty("breeds")
     private String breed;
     private String country;
     private String origin;
@@ -29,7 +23,6 @@ public class Cat {
         this.coat = coat;
         this.pattern = pattern;
     }
-
 
     public String getBreed() {
         return breed;

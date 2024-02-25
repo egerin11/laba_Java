@@ -1,9 +1,7 @@
 package com.example.laba.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CatFact {
-    @JsonProperty("fact")
     private String facts;
 
     private int length;

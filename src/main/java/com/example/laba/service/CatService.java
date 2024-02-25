@@ -33,7 +33,13 @@ public class CatService implements Services {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readValue(json, JsonNode.class);
         JsonNode dataArray = jsonNode.get("data");
-
+        if (action.equals("fact")) {
+            String fact = jsonNode.get("fact").asText();
+            int length = jsonNode.get("length").asInt();
+            CatFact catFact = new CatFact(fact, length);
+            catInfRepository.saveCatFact(catFact);
+            return;
+        }
         for (JsonNode catNode : dataArray) {
             if (action.equals("breeds")) {
                 String breed = catNode.get("breed").asText();
