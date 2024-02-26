@@ -52,9 +52,7 @@ src/
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/**/contentModel.xml
-.mvn
-mvnw
-mvnw.cmd
+
 # SonarLint plugin
 .idea/sonarlint/
 laba.iml
