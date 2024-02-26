@@ -40,7 +40,6 @@ public class CatService implements Services {
             catInfRepository.saveCatFact(catFact);
             return;
         }
-        //System.out.println();
         for (JsonNode catNode : dataArray) {
             if (action.equals("breeds")) {
                 String breed = catNode.get("breed").asText();
