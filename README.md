@@ -29,7 +29,7 @@ ____
 
 ## GET-запросы
 
-> http://localhost:8080/api/v1/cats/facts получить факты о котах
+>http://localhost:8080/api/v1/cats/facts получить факты о котах
 >> http://localhost:8080/api/v1/cats/breeds получить породы котов
 > >> http://localhost:8080/api/v1 получить породы кошек из локального хранилища после получения данных с api
 > >>> http://localhost:8080/api/v1/facts получить факты о кошках из локального хранилища после получения данных с api
