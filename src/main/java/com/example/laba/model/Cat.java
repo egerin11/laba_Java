@@ -25,5 +25,4 @@ public class Cat {
     @ManyToMany(mappedBy = "cats")
     private List<Breed> breeds=new ArrayList<>();
 
-
 }
