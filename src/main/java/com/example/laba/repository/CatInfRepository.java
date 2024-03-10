@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CatInfRepository {
+public class CatInfRepository{
     private List<CatFact> facts = new ArrayList<>();
 
     public CatFact saveCatFact(CatFact catFact) {
@@ -17,4 +17,7 @@ public class CatInfRepository {
     public List<CatFact> getFacts() {
         return facts;
     }
-}
+
+
+    }
+

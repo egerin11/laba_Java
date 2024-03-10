@@ -1,6 +1,6 @@
 package com.example.laba.repository;
 
-import com.example.laba.model.Cat;
+import com.example.laba.model.Breed;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -8,15 +8,15 @@ import java.util.List;
 
 @Repository
 public class CatRepository {
-    private List<Cat> cats = new ArrayList<>();
+    private List<Breed> breeds = new ArrayList<>();
 
-    public Cat saveCat(Cat cat) {
-        cats.add(cat);
-        return cat;
+    public Breed saveCat(Breed breed) {
+        breeds.add(breed);
+        return breed;
     }
 
-    public List<Cat> getCats() {
-        return cats;
+    public List<Breed> getCats() {
+        return breeds;
     }
 
 }

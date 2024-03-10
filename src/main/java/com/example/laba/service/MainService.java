@@ -1,18 +1,19 @@
 package com.example.laba.service;
 
 
-import lombok.AllArgsConstructor;
-
+import com.fasterxml.jackson.databind.JsonNode;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MainService {
     private final CatService catService;
 
-    public String getInf(String action) {
+
+    public JsonNode getInf(String action) {
         return catService.getInf(action);
     }
 
@@ -20,7 +21,6 @@ public class MainService {
     public void catInf(String action) {
         catService.saveInfCat(action);
     }
-
 
 
 }

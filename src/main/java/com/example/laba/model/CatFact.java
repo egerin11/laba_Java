@@ -1,34 +1,29 @@
 package com.example.laba.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Data;
 
+@Entity
+@Data
+@Table(name = "fact")
 public class CatFact {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "fact")
     private String facts;
 
+    @Column(name = "length")
     private int length;
 
-    @Override
-    public String toString() {
-
-        return facts + length;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public String getFacts() {
-        return facts;
-    }
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "list_facts_id")
+    private MyListFact myListFact;
 
     public CatFact() {
-    }
-
-    public void setFacts(String facts) {
-        this.facts = facts;
     }
 
     public CatFact(String facts, int length) {
@@ -36,5 +31,4 @@ public class CatFact {
         this.length = length;
     }
 }
-
 
