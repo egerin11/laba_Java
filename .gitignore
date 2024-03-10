@@ -13,7 +13,7 @@ target/
 .springBeans
 .sts4-cache
 
-godana.yaml
+qodana.yaml
 
 ### NetBeans ###
 /nbproject/private/
@@ -42,7 +42,6 @@ build/
 *.sig
 
 pkg/
-src/
 
 ### Intellij ###
 # User-specific stuff
