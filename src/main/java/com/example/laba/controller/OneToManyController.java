@@ -2,8 +2,8 @@ package com.example.laba.controller;
 
 import com.example.laba.model.CatFact;
 import com.example.laba.model.MyListFact;
-import com.example.laba.repository.DAO.FactRepository;
-import com.example.laba.repository.DAO.MyListFactRepository;
+import com.example.laba.repository.dao.FactRepository;
+import com.example.laba.repository.dao.MyListFactRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

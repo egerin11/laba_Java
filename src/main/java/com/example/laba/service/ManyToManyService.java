@@ -2,8 +2,8 @@ package com.example.laba.service;
 
 import com.example.laba.model.Breed;
 import com.example.laba.model.Cat;
-import com.example.laba.repository.DAO.BreedInterface;
-import com.example.laba.repository.DAO.CatINterface;
+import com.example.laba.repository.dao.BreedInterface;
+import com.example.laba.repository.dao.CatINterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;

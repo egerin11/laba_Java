@@ -14,7 +14,7 @@ public class Breed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String breed;
+    private String breeds;
     private String country;
     private String origin;
     private String coat;
@@ -30,7 +30,7 @@ public class Breed {
 
     @Override
     public String toString() {
-        return breed + country + origin + coat + pattern;
+        return breeds + country + origin + coat + pattern;
     }
 
     public Breed() {
@@ -47,7 +47,7 @@ public class Breed {
     }
 
     public Breed(String breed, String country, String origin, String coat, String pattern) {
-        this.breed = breed;
+        this.breeds = breed;
         this.country = country;
         this.origin = origin;
         this.coat = coat;
