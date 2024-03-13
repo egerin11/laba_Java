@@ -1,34 +1,53 @@
 package com.example.laba.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
-@Data
-@Table(name = "fact")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class CatFact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "fact")
-    private String facts;
+    private String fact;
 
-    @Column(name = "length")
-    private int length;
 
     @ManyToOne
+    @JoinColumn(name = "cat_id" )
     @JsonIgnore
-    @JoinColumn(name = "list_facts_id")
-    private MyListFact myListFact;
+    private Cat cat;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFact() {
+        return fact;
+    }
+
+    public void setFact(String fact) {
+        this.fact = fact;
+    }
 
     public CatFact() {
     }
 
-    public CatFact(String facts, int length) {
-        this.facts = facts;
-        this.length = length;
+    public CatFact(String fact) {
+        this.fact = fact;
+    }
+
+    public Cat getCat() {
+        return cat;
+    }
+
+    public void setCat(Cat cat) {
+        this.cat = cat;
     }
 }
-

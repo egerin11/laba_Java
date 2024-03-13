@@ -1,53 +1,77 @@
 package com.example.laba.model;
 
-import jakarta.persistence.*;
-import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Data
-@Table(name = "breed")
+
 public class Breed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String breeds;
     private String country;
     private String origin;
     private String coat;
     private String pattern;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "breed_table",
-            joinColumns = {@JoinColumn(name = "breed_id")},
-            inverseJoinColumns = {@JoinColumn(name = "cat_id")}
-    )
-    private List<Cat> cats = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        return breeds + country + origin + coat + pattern;
-    }
-
     public Breed() {
+
     }
 
-    public void addCat(Cat cat) {
-        cats.add(cat);
-        cat.getBreeds().add(this);
+    public Long getId() {
+        return id;
     }
 
-    public void removeCat(Cat cat) {
-        cats.remove(cat);
-        cat.getBreeds().remove(this);
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Breed(String breed, String country, String origin, String coat, String pattern) {
+    public String getBreeds() {
+        return breeds;
+    }
+
+    public void setBreeds(String breed) {
         this.breeds = breed;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getCoat() {
+        return coat;
+    }
+
+    public void setCoat(String coat) {
+        this.coat = coat;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    public Breed(String breeds, String country, String origin, String coat, String pattern) {
+        this.breeds = breeds;
         this.country = country;
         this.origin = origin;
         this.coat = coat;

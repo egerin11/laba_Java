@@ -12,9 +12,10 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
+mvnw.cmd
+mvnw
 qodana.yaml
-
+db.sql
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

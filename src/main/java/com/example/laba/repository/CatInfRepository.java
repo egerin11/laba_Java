@@ -8,14 +8,14 @@ import java.util.List;
 
 @Repository
 public class CatInfRepository{
-    private List<CatFact> facts = new ArrayList<>();
+    private List<CatFact> catFacts = new ArrayList<>();
 
     public CatFact saveCatFact(CatFact catFact) {
-        facts.add(catFact);
+        catFacts.add(catFact);
         return catFact;
     }
     public List<CatFact> getFacts() {
-        return facts;
+        return catFacts;
     }
 
 
