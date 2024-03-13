@@ -1,6 +1,6 @@
 package com.example.laba.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.laba.model.dto.CatFactDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,17 +18,21 @@ public class CatFact {
     @Column(name = "length")
     private int length;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "list_facts_id")
-    private MyListFact myListFact;
-
-    public CatFact() {
-    }
 
     public CatFact(String facts, int length) {
         this.facts = facts;
         this.length = length;
+    }
+
+    public CatFact() {
+
+    }
+
+    public static CatFact from(CatFactDto catFactDto) {
+        CatFact catFact = new CatFact();
+        catFact.setFacts(catFactDto.getFacts());
+        catFact.setLength(catFactDto.getLength());
+        return catFact;
     }
 }
 

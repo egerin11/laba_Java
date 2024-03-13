@@ -1,5 +1,6 @@
-package com.example.laba.model;
+package com.example.laba.model.dto;
 
+import com.example.laba.model.CatFact;
 import lombok.Data;
 
 @Data
