@@ -1,38 +1,50 @@
 package com.example.laba.model;
 
-import com.example.laba.model.dto.CatFactDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
-@Data
-@Table(name = "fact")
 public class CatFact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "fact")
-    private String facts;
+    private String fact;
 
-    @Column(name = "length")
-    private int length;
+    @ManyToOne
+    @JoinColumn(name = "cat_id")
+    @JsonIgnore
+    private Cat cat;
 
+    public Long getId() {
+        return id;
+    }
 
-    public CatFact(String facts, int length) {
-        this.facts = facts;
-        this.length = length;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFact() {
+        return fact;
+    }
+
+    public void setFact(String fact) {
+        this.fact = fact;
     }
 
     public CatFact() {
-
     }
 
-    public static CatFact from(CatFactDto catFactDto) {
-        CatFact catFact = new CatFact();
-        catFact.setFacts(catFactDto.getFacts());
-        catFact.setLength(catFactDto.getLength());
-        return catFact;
+    public CatFact(String fact) {
+        this.fact = fact;
+    }
+
+    public Cat getCat() {
+        return cat;
+    }
+
+    public void setCat(Cat cat) {
+        this.cat = cat;
     }
 }
 
