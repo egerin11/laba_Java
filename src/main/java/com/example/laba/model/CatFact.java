@@ -1,53 +1,38 @@
 package com.example.laba.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.example.laba.model.dto.CatFactDto;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Data
+@Table(name = "fact")
 public class CatFact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fact;
+    @Column(name = "fact")
+    private String facts;
+
+    @Column(name = "length")
+    private int length;
 
 
-    @ManyToOne
-    @JoinColumn(name = "cat_id" )
-    @JsonIgnore
-    private Cat cat;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFact() {
-        return fact;
-    }
-
-    public void setFact(String fact) {
-        this.fact = fact;
+    public CatFact(String facts, int length) {
+        this.facts = facts;
+        this.length = length;
     }
 
     public CatFact() {
+
     }
 
-    public CatFact(String fact) {
-        this.fact = fact;
-    }
-
-    public Cat getCat() {
-        return cat;
-    }
-
-    public void setCat(Cat cat) {
-        this.cat = cat;
+    public static CatFact from(CatFactDto catFactDto) {
+        CatFact catFact = new CatFact();
+        catFact.setFacts(catFactDto.getFacts());
+        catFact.setLength(catFactDto.getLength());
+        return catFact;
     }
 }
+
