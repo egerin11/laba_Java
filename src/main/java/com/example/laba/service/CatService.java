@@ -1,9 +1,11 @@
 package com.example.laba.service;
 
+import com.example.laba.cache.LRUCache;
 import com.example.laba.model.Breed;
 import com.example.laba.model.Cat;
 import com.example.laba.model.CatFact;
 import com.example.laba.model.Owner;
+import com.example.laba.model.dto.CatDto;
 import com.example.laba.repository.CatInfRepository;
 import com.example.laba.repository.CatRepository;
 import com.example.laba.repository.dao.CatFactRepository;
@@ -13,18 +15,20 @@ import com.example.laba.service.interfaces.CatInterface;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.jetbrains.annotations.NotNull;
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.StreamSupport;
 
-
 @Service
-
 public class CatService implements CatInterface {
-
+    private final Logger logger = LoggerFactory.getLogger(CatService.class);
     private static String catInfApiUrl = "https://catfact.ninja/{action}";
 
     private final RestTemplate restTemplate;
@@ -34,9 +38,13 @@ public class CatService implements CatInterface {
     private final CatFactRepository catFactRepository;
     private final FactService factService;
     private final OwnerRepository ownerRepository;
+    private final ModelMapper mapper;
+
+
+    private final LRUCache<Long, CatDto> catCache = new LRUCache<>(2);
 
     @Autowired
-    public CatService(RestTemplate restTemplate, CatRepository catRepository, CatInfRepository catInfRepository, CatRepositoryDao catINterface, CatFactRepository catFactRepository, FactService factService, OwnerRepository ownerRepository) {
+    public CatService(RestTemplate restTemplate, CatRepository catRepository, CatInfRepository catInfRepository, CatRepositoryDao catINterface, CatFactRepository catFactRepository, FactService factService, OwnerRepository ownerRepository, ModelMapper mapper) {
         this.restTemplate = restTemplate;
         this.catRepository = catRepository;
         this.catInfRepository = catInfRepository;
@@ -44,7 +52,9 @@ public class CatService implements CatInterface {
         this.catFactRepository = catFactRepository;
         this.factService = factService;
         this.ownerRepository = ownerRepository;
+        this.mapper = mapper;
     }
+
 
     @Override
     public JsonNode getInf(String action) {
@@ -81,7 +91,7 @@ public class CatService implements CatInterface {
     }
 
     @Override
-    public Cat addCat(@NotNull Cat cat) {
+    public CatDto addCat(@NotNull Cat cat) {
         Cat newCat = new Cat();
         newCat.setName(cat.getName());
         newCat.setAge(cat.getAge());
@@ -101,32 +111,50 @@ public class CatService implements CatInterface {
             catINterface.save(savedCat);
             ownerRepository.save(existingOwner);
         }
+        logger.info("добавлен кот");
+        return mapper.map(cat, CatDto.class);
 
-        return cat;
-    }
-
-
-    @Override
-    public Cat getCat(Long id) {
-        return catINterface.findById(id).orElse(null);
     }
 
     @Override
-    public List<Cat> getAllCat() {
-        return StreamSupport.stream(catINterface.findAll().spliterator(), false).toList();
+    public CatDto getCat(Long id) {
+        CatDto catDto = catCache.get(id);
+        if (catDto == null) {
+            Cat cat = catINterface.findById(id).orElseThrow(() -> new ResourceNotFoundException(""));
+            catDto = mapper.map(cat, CatDto.class);
+            if (cat != null) {
+                catCache.put(id, catDto);
+            }
+        }
+        catCache.displayCache();
+
+        logger.info("получен кот");
+
+        return catDto;
     }
+
+    @Override
+    public List<CatDto> getAllCat() {
+        catCache.displayCache();
+        return StreamSupport.stream(catINterface.findAll().spliterator(), false)
+                .map(cat -> mapper.map(cat, CatDto.class)).toList();
+    }
+
 
     @Override
     public String removeCat(Long id) {
-        Cat cat = getCat(id);
-        catINterface.delete(cat);
+
+        catINterface.deleteById(id);
+        catCache.remove(id);
 
         return "delete";
     }
 
     @Override
-    public Cat updateCat(Long id, @NotNull Cat cat) {
-        Cat existingCat = getCat(id);
+    public CatDto updateCat(Long id, @NotNull Cat cat) {
+        CatDto catDto = getCat(id);
+        Cat existingCat = mapper.map(catDto, Cat.class);
+
 
         existingCat.setName(cat.getName());
         existingCat.setAge(cat.getAge());
@@ -151,12 +179,15 @@ public class CatService implements CatInterface {
                 }
             }
         }
-        return catINterface.save(existingCat);
+        catCache.put(id, catDto);
+        return catDto;
+
     }
 
     @Override
     public Cat addFactToCat(Long factId, Long catId) {
-        Cat cat = getCat(catId);
+        CatDto catDto = getCat(catId);
+        Cat cat = mapper.map(catDto, Cat.class);
         CatFact fact = factService.getFact(factId);
         if (!cat.getFacts().contains(fact)) {
             cat.getFacts().add(fact);
@@ -167,5 +198,11 @@ public class CatService implements CatInterface {
         return cat;
     }
 
+    @Override
+    public List<CatDto> findCatsByOwnerId(Long id) {
 
+
+        return StreamSupport.stream(catINterface.findCatsByOwnerId(id).spliterator(), false)
+                .map(cat -> mapper.map(cat, CatDto.class)).toList();
+    }
 }

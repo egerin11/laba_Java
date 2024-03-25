@@ -1,6 +1,7 @@
 package com.example.laba.service.interfaces;
 
 import com.example.laba.model.Cat;
+import com.example.laba.model.dto.CatDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -11,18 +12,18 @@ public interface CatInterface {
 
     void saveInfCat(String action) throws JsonProcessingException;
 
-    Cat getCat(Long id);
+    CatDto getCat(Long id);
 
-    Cat addCat(Cat cat);
+    CatDto addCat(Cat cat);
 
     String removeCat(Long id);
 
-    Cat updateCat(Long id, Cat cat);
+    CatDto updateCat(Long id, Cat cat);
 
-    List<Cat> getAllCat();
+    List<CatDto> getAllCat();
 
     Cat addFactToCat(Long factId, Long catId);
-
+    List<CatDto> findCatsByOwnerId(Long id);
 }
 
 

@@ -17,6 +17,9 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class OwnerService implements OwnerInterface {
+    /**
+     * ownerRepository is a repository of entity owner.
+     */
     private final OwnerRepository ownerRepository;
     private final CatRepositoryDao catRepositoryDao;
 
@@ -39,15 +42,16 @@ public class OwnerService implements OwnerInterface {
                 if (cat.getId() == null) {
                     cat = catRepositoryDao.save(cat);
                 }
-                if (!cat.getOwners().contains(owner)) {
-                    cat.addOwner(owner);
-                    savedCats.add(cat);
-                }
+                savedCats.add(cat);
+            }
+            for (Cat savedCat : savedCats) {
+                savedCat.addOwner(owner);
             }
             owner.setCats(savedCats);
         }
         return ownerRepository.save(owner);
     }
+
 
     @Override
     public Owner getOwner(Long id) {

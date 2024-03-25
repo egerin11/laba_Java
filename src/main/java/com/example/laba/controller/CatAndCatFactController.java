@@ -2,44 +2,57 @@ package com.example.laba.controller;
 
 import com.example.laba.model.Cat;
 import com.example.laba.model.CatFact;
+import com.example.laba.model.dto.CatDto;
 import com.example.laba.service.CatService;
 import com.example.laba.service.FactService;
-import lombok.RequiredArgsConstructor;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/list")
-@RequiredArgsConstructor
 public class CatAndCatFactController {
 
     private final FactService factService;
     private final CatService catService;
 
 
+    public CatAndCatFactController(FactService factService, CatService catService) {
+        this.factService = factService;
+        this.catService = catService;
+
+    }
+
     @PostMapping("/add-fact/{id}")
-    public CatFact addFact(@RequestBody CatFact catFact,@PathVariable Long id) {
-        return factService.addFact(catFact,id);
+    @ApiOperation("add fact about cat")
+    public CatFact addFact(@RequestBody CatFact catFact, @PathVariable Long id) {
+        return factService.addFact(catFact, id);
     }
 
 
     @PostMapping("/add-cat")
-    public Cat addToMyList(@RequestBody Cat cat) {
+    public CatDto addToMyList(@RequestBody Cat cat) {
         return catService.addCat(cat);
     }
-@PostMapping("/fact/{factId}/cat/{catId}")
-public Cat addFactToCat(@PathVariable Long factId,@PathVariable Long catId){
-        return catService.addFactToCat(factId,catId);
-}
+
+    @PostMapping("/fact/{factId}/cat/{catId}")
+    public Cat addFactToCat(@PathVariable Long factId, @PathVariable Long catId) {
+        return catService.addFactToCat(factId, catId);
+    }
+
+    @GetMapping("/find-cat-by-owner/{id}")
+    public List<CatDto> findCatsByOwnerId(@PathVariable Long id) {
+        return catService.findCatsByOwnerId(id);
+    }
 
     @GetMapping("/cats")
-    public List<Cat> getCats() {
+    public List<CatDto> getCats() {
         return catService.getAllCat();
     }
 
     @GetMapping("/cat/{id}")
-    public Cat getCatByID(@PathVariable Long id) {
+    public CatDto getCatByID(@PathVariable Long id) {
         return catService.getCat(id);
     }
 
@@ -60,7 +73,7 @@ public Cat addFactToCat(@PathVariable Long factId,@PathVariable Long catId){
     }
 
     @PutMapping("/update-cat/{id}")
-    public Cat updateCat(@PathVariable Long id, @RequestBody Cat cat) {
+    public CatDto updateCat(@PathVariable Long id, @RequestBody Cat cat) {
         return catService.updateCat(id, cat);
     }
 
@@ -73,7 +86,6 @@ public Cat addFactToCat(@PathVariable Long factId,@PathVariable Long catId){
     public String deleteCat(@PathVariable Long id) {
         return catService.removeCat(id);
     }
-
 
 
 }

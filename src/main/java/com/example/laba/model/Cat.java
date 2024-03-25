@@ -1,14 +1,13 @@
 package com.example.laba.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Cat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +24,43 @@ public class Cat {
             name = "cat_owner",
             joinColumns = @JoinColumn(name = "cat_id"),
             inverseJoinColumns = @JoinColumn(name = "owner_id"))
+
     private Set<Owner> owners = new HashSet<>();
+
+
     public void addOwner(Owner owner) {
         owners.add(owner);
         owner.getCats().add(this);
     }
+
     public void removeOwner(Owner owner) {
         owners.remove(owner);
         owner.getCats().remove(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cat cat = (Cat) o;
+        return Objects.equals(name, cat.name) &&
+                Objects.equals(age, cat.age) ;
+    }
+
+    @Override
+    public String toString() {
+        return "Cat{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", facts=" + facts +
+                ", owners=" + owners +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
     }
 
     public Long getId() {

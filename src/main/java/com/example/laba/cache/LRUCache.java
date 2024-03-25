@@ -1,37 +1,53 @@
 package com.example.laba.cache;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
-public class MyCache<K, V> {
-    int capacity;
-    private final LinkedHashMap<K, V> cache;
 
-    public MyCache(int maxSize) {
-        this.capacity = maxSize;
-        this.cache = new LinkedHashMap<K, V>(capacity, 0.75f, true) {
-            @Override
-            protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-                return size() > maxSize;
-            }
-        };
-    }
+public class LRUCache<K, V> {
+    private final int capacity;
+    private Map<K, V> cache;
+    private LinkedList<K> keys;
 
-    public V get(K key) {
-        return cache.getOrDefault(key, -1);
+    public LRUCache(int size) {
+        this.capacity = size;
+        this.cache = new HashMap<>();
+        this.keys = new LinkedList<>();
     }
 
     public void put(K key, V value) {
+        if (cache.containsKey(key)) {
+            keys.remove(key);
+        } else if (cache.size() >= capacity) {
+            K oldestKey = keys.removeFirst();
+            cache.remove(oldestKey);
+        }
+
         cache.put(key, value);
+        keys.addLast(key);
+    }
+
+    public V get(K key) {
+        if (cache.containsKey(key)) {
+            keys.remove(key);
+            keys.addLast(key);
+            return cache.get(key);
+        }
+        return null;
     }
 
     public void remove(K key) {
-        cache.remove(key);
+        if (cache.containsKey(key)) {
+            keys.remove(key);
+            cache.remove(key);
+        }
     }
 
-    public void clear() {
-        cache.clear();
+    public void displayCache() {
+        System.out.println("LRUCache contents:");
+        for (K key : keys) {
+            System.out.println(key.toString() + ": " + cache.get(key));
+        }
     }
-
-
 }

@@ -3,6 +3,8 @@ package com.example.laba.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 public class CatFact {
     @Id
@@ -11,10 +13,33 @@ public class CatFact {
 
     private String fact;
 
+
     @ManyToOne
     @JoinColumn(name = "cat_id")
     @JsonIgnore
     private Cat cat;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CatFact catFact = (CatFact) o;
+        return Objects.equals(fact, catFact.fact);
+    }
+
+    @Override
+    public String toString() {
+        return "CatFact{" +
+                "id=" + id +
+                ", fact='" + fact + '\'' +
+                ", cat=" + cat +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fact);
+    }
 
     public Long getId() {
         return id;

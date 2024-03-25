@@ -39,4 +39,9 @@ public class OwnerAndCatController {
     public Owner deleteCatToOwner(@PathVariable Long catId, @PathVariable Long ownerId) {
         return ownerService.deleteCatToOwner(catId, ownerId);
     }
+
+    @DeleteMapping("/delete-owner/{id}")
+    public String deleteOwner(@PathVariable Long id) {
+        return "delete";
+    }
 }

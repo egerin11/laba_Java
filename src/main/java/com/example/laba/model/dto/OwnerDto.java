@@ -1,5 +1,6 @@
 package com.example.laba.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,10 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OwnerDTO {
+public class OwnerDto {
     private Long id;
     private String name;
-    private List<CatDTO> cats;
+    @JsonBackReference
+    private List<CatDto> cats;
 
 }
