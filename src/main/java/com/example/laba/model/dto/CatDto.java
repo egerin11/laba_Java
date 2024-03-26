@@ -8,17 +8,15 @@ import lombok.Setter;
 
 import java.util.List;
 
+/** The type Cat dto. */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CatDto {
-    private Long id;
-    private String name;
-    private Integer age;
-    @JsonManagedReference
-    private List<CatFactDto> facts;
-    @JsonManagedReference
-    private List<OwnerDto> owners;
-
+  private Long id;
+  private String name;
+  private Integer age;
+  @JsonManagedReference private List<CatFactDto> facts;
+  @JsonManagedReference private List<OwnerDto> owners;
 }

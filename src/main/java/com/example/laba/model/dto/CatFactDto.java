@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public class CatFactDto {
-        private Long id;
-        private String fact;
-
-    }
+/** The type Cat fact dto. */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class CatFactDto {
+  private Long id;
+  private String fact;
+}

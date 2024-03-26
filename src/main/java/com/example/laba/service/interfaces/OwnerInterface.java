@@ -1,21 +1,57 @@
 package com.example.laba.service.interfaces;
 
 import com.example.laba.model.Owner;
-
 import java.util.List;
 
+/** The interface Owner interface. */
 public interface OwnerInterface {
 
-    Owner getOwner(Long id);
+  /**
+   * Gets owner.
+   *
+   * @param id the id
+   * @return the owner
+   */
+  Owner getOwner(Long id);
 
-    Owner addOwner(Owner owner);
+  /**
+   * Add owner owner.
+   *
+   * @param owner the owner
+   * @return the owner
+   */
+  Owner addOwner(Owner owner);
 
-    List<Owner> getAllOwners();
+  /**
+   * Gets all owners.
+   *
+   * @return the all owners
+   */
+  List<Owner> getAllOwners();
 
-    Owner removeOwner(Long id);
+  /**
+   * Remove owner owner.
+   *
+   * @param id the id
+   * @return the owner
+   */
+  Owner removeOwner(Long id);
 
-    Owner updateOwner(Long id, Owner owner);
+  /**
+   * Update owner owner.
+   *
+   * @param id the id
+   * @param owner the owner
+   * @return the owner
+   */
+  Owner updateOwner(Long id, Owner owner);
 
-    Owner deleteCatToOwner(Long catId, Long ownerId);
-
+  /**
+   * Delete cat to owner owner.
+   *
+   * @param catId the cat id
+   * @param ownerId the owner id
+   * @return the owner
+   */
+  Owner deleteCatToOwner(Long catId, Long ownerId);
 }

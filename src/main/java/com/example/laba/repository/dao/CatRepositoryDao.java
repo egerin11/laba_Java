@@ -10,12 +10,19 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * The interface Cat repository dao.
+ */
 @Repository
 @Hidden
 public interface CatRepositoryDao extends JpaRepository<Cat, Long> {
-    @Transactional
-    @Query("SELECT c FROM Cat c JOIN c.owners o WHERE o.id = :id")
-    List<Cat> findCatsByOwnerId(@Param("id") Long id);
-
-
+  /**
+   * Find cats by owner id list.
+   *
+   * @param id the id
+   * @return the list
+   */
+  @Transactional
+  @Query("SELECT c FROM Cat c JOIN c.owners o WHERE o.id = :id")
+  List<Cat> findCatsByOwnerId(@Param("id") Long id);
 }

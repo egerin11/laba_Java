@@ -8,14 +8,13 @@ import lombok.Setter;
 
 import java.util.List;
 
+/** The type Owner dto. */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class OwnerDto {
-    private Long id;
-    private String name;
-    @JsonBackReference
-    private List<CatDto> cats;
-
+  private Long id;
+  private String name;
+  @JsonBackReference private List<CatDto> cats;
 }

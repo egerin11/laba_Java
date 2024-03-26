@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApiError {
-    private Integer errorCode;
-    private String errorMessage;
-
+  private Integer errorCode;
+  private String errorMessage;
 }
