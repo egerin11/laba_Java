@@ -3,6 +3,7 @@ package com.example.laba.controller;
 
 import com.example.laba.model.Owner;
 import com.example.laba.service.OwnerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/owner")
 @RequiredArgsConstructor
+@Tag(name = "Owner and Cat ", description = "API to manipulate  owner")
 public class OwnerAndCatController {
 
     private final OwnerService ownerService;

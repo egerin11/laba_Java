@@ -5,6 +5,7 @@ import com.example.laba.model.Owner;
 import com.example.laba.repository.dao.CatRepositoryDao;
 import com.example.laba.repository.dao.OwnerRepository;
 import com.example.laba.service.interfaces.OwnerInterface;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -16,6 +17,8 @@ import java.util.Set;
 import java.util.stream.StreamSupport;
 
 @Service
+@Hidden
+
 public class OwnerService implements OwnerInterface {
     /**
      * ownerRepository is a repository of entity owner.

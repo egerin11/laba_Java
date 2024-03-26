@@ -4,6 +4,7 @@ import com.example.laba.model.Cat;
 import com.example.laba.model.CatFact;
 import com.example.laba.repository.dao.CatFactRepository;
 import com.example.laba.repository.dao.CatRepositoryDao;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.stream.StreamSupport;
 
 @Service
+@Hidden
+
 public class FactService {
 
     private final CatFactRepository listFactRepository;
