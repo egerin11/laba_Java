@@ -15,6 +15,7 @@ public interface OwnerInterface {
     Owner removeOwner(Long id);
 
     Owner updateOwner(Long id, Owner owner);
-    Owner deleteCatToOwner(Long catId,Long ownerId);
+
+    Owner deleteCatToOwner(Long catId, Long ownerId);
 
 }

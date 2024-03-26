@@ -12,7 +12,6 @@ import java.util.List;
 
 @Repository
 @Hidden
-
 public interface CatRepositoryDao extends JpaRepository<Cat, Long> {
     @Transactional
     @Query("SELECT c FROM Cat c JOIN c.owners o WHERE o.id = :id")

@@ -18,7 +18,6 @@ import java.util.stream.StreamSupport;
 
 @Service
 @Hidden
-
 public class OwnerService implements OwnerInterface {
     /**
      * ownerRepository is a repository of entity owner.

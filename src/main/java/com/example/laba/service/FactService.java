@@ -15,11 +15,11 @@ import java.util.stream.StreamSupport;
 
 @Service
 @Hidden
-
 public class FactService {
 
     private final CatFactRepository listFactRepository;
-private final CatRepositoryDao catRepositoryDao;
+    private final CatRepositoryDao catRepositoryDao;
+
     @Autowired
     public FactService(CatFactRepository listFactRepository, CatRepositoryDao catRepositoryDao) {
         this.listFactRepository = listFactRepository;

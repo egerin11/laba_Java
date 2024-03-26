@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Hidden
-
-public interface OwnerRepository extends JpaRepository<Owner,Long> {
+public interface OwnerRepository extends JpaRepository<Owner, Long> {
     Owner findByName(String name);
 }

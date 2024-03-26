@@ -19,6 +19,7 @@ public interface CatInterface {
     List<CatDto> getAllCat();
 
     Cat addFactToCat(Long factId, Long catId);
+
     List<CatDto> findCatsByOwnerId(Long id);
 }
 

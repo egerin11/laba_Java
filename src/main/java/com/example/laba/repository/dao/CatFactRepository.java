@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Hidden
-
-public interface CatFactRepository extends JpaRepository<CatFact,Long> {
-CatFact findByFact(String fact);
+public interface CatFactRepository extends JpaRepository<CatFact, Long> {
+    CatFact findByFact(String fact);
 }

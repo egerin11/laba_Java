@@ -105,7 +105,6 @@ public class CatAndCatFactController {
 
     @DeleteMapping("/delete-cat/{id}")
     @Operation(summary = "updates fact by id") // 2
-
     public String deleteCat(@PathVariable Long id) {
         return catService.removeCat(id);
     }

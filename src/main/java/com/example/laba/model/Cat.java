@@ -1,6 +1,5 @@
 package com.example.laba.model;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -8,8 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Cat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +23,6 @@ public class Cat {
             name = "cat_owner",
             joinColumns = @JoinColumn(name = "cat_id"),
             inverseJoinColumns = @JoinColumn(name = "owner_id"))
-
     private Set<Owner> owners = new HashSet<>();
 
 
@@ -46,7 +42,7 @@ public class Cat {
         if (o == null || getClass() != o.getClass()) return false;
         Cat cat = (Cat) o;
         return Objects.equals(name, cat.name) &&
-                Objects.equals(age, cat.age) ;
+                Objects.equals(age, cat.age);
     }
 
     @Override

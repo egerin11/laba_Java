@@ -156,8 +156,6 @@ public class CatService implements CatInterface {
 
     @Override
     public List<CatDto> findCatsByOwnerId(Long id) {
-
-
         return StreamSupport.stream(catInterface.findCatsByOwnerId(id).spliterator(), false)
                 .map(cat -> mapper.map(cat, CatDto.class)).toList();
     }

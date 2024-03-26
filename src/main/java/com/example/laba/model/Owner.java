@@ -22,7 +22,7 @@ public class Owner {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Owner owner = (Owner) o;
-        return Objects.equals(name, owner.name) ;
+        return Objects.equals(name, owner.name);
     }
 
     @Override
