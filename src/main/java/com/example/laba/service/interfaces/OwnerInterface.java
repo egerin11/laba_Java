@@ -1,6 +1,7 @@
 package com.example.laba.service.interfaces;
 
 import com.example.laba.model.Owner;
+import com.example.laba.model.dto.OwnerDto;
 import java.util.List;
 
 /** The interface Owner interface. */
@@ -27,7 +28,7 @@ public interface OwnerInterface {
    *
    * @return the all owners
    */
-  List<Owner> getAllOwners();
+  List<OwnerDto> getAllOwners();
 
   /**
    * Remove owner owner.

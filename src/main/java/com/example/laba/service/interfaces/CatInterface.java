@@ -12,7 +12,7 @@ public interface CatInterface {
    * @param id the id
    * @return the cat
    */
-CatDto getCat(Long id);
+  CatDto getCat(Long id);
 
   /**
    * Add cat cat dto.
@@ -20,7 +20,7 @@ CatDto getCat(Long id);
    * @param cat the cat
    * @return the cat dto
    */
-CatDto addCat(Cat cat);
+  CatDto addCat(Cat cat);
 
   /**
    * Remove cat string.
@@ -28,7 +28,7 @@ CatDto addCat(Cat cat);
    * @param id the id
    * @return the string
    */
-String removeCat(Long id);
+  String removeCat(Long id);
 
   /**
    * Update cat cat dto.
@@ -37,14 +37,14 @@ String removeCat(Long id);
    * @param cat the cat
    * @return the cat dto
    */
-CatDto updateCat(Long id, Cat cat);
+  CatDto updateCat(Long id, Cat cat);
 
   /**
    * Gets all cat.
    *
    * @return the all cat
    */
-List<CatDto> getAllCat();
+  List<CatDto> getAllCat();
 
   /**
    * Add fact to cat cat.
@@ -53,7 +53,7 @@ List<CatDto> getAllCat();
    * @param catId the cat id
    * @return the cat
    */
-Cat addFactToCat(Long factId, Long catId);
+  Cat addFactToCat(Long factId, Long catId);
 
   /**
    * Find cats by owner id list.

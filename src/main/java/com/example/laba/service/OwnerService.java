@@ -2,6 +2,7 @@ package com.example.laba.service;
 
 import com.example.laba.model.Cat;
 import com.example.laba.model.Owner;
+import com.example.laba.model.dto.OwnerDto;
 import com.example.laba.repository.dao.CatRepositoryDao;
 import com.example.laba.repository.dao.OwnerRepository;
 import com.example.laba.service.interfaces.OwnerInterface;
@@ -11,19 +12,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.StreamSupport;
 import org.jetbrains.annotations.NotNull;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-/**
- * The type Owner service.
- */
+/** The type Owner service. */
 @Service
 @Hidden
 public class OwnerService implements OwnerInterface {
   /** ownerRepository is a repository of entity owner. */
   private final OwnerRepository ownerRepository;
 
+  private final ModelMapper mapper;
   private final CatRepositoryDao catRepositoryDao;
 
   /**
@@ -33,14 +34,18 @@ public class OwnerService implements OwnerInterface {
    * @param catRepositoryDao the cat repository dao
    */
   @Autowired
-  public OwnerService(OwnerRepository ownerRepository, CatRepositoryDao catRepositoryDao) {
+  public OwnerService(
+      OwnerRepository ownerRepository, ModelMapper mapper, CatRepositoryDao catRepositoryDao) {
     this.ownerRepository = ownerRepository;
+    this.mapper = mapper;
     this.catRepositoryDao = catRepositoryDao;
   }
 
   @Override
-  public List<Owner> getAllOwners() {
-    return StreamSupport.stream(ownerRepository.findAll().spliterator(), false).toList();
+  public List<OwnerDto> getAllOwners() {
+    return StreamSupport.stream(ownerRepository.findAll().spliterator(), false)
+        .map(owner -> mapper.map(owner, OwnerDto.class))
+        .toList();
   }
 
   @Override

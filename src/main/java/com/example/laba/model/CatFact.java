@@ -1,13 +1,15 @@
 package com.example.laba.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import java.util.Objects;
 
-/**
- * The type Cat fact.
- */
+/** The type Cat fact. */
 @Entity
 public class CatFact {
   @Id
@@ -23,8 +25,12 @@ public class CatFact {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     CatFact catFact = (CatFact) o;
     return Objects.equals(fact, catFact.fact);
   }
@@ -44,7 +50,7 @@ public class CatFact {
    *
    * @return the id
    */
-public Long getId() {
+  public Long getId() {
     return id;
   }
 
@@ -53,7 +59,7 @@ public Long getId() {
    *
    * @param id the id
    */
-public void setId(Long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -62,7 +68,7 @@ public void setId(Long id) {
    *
    * @return the fact
    */
-public String getFact() {
+  public String getFact() {
     return fact;
   }
 
@@ -71,21 +77,19 @@ public String getFact() {
    *
    * @param fact the fact
    */
-public void setFact(String fact) {
+  public void setFact(String fact) {
     this.fact = fact;
   }
 
-  /**
-   * Instantiates a new Cat fact.
-   */
-public CatFact() {}
+  /** Instantiates a new Cat fact. */
+  public CatFact() {}
 
   /**
    * Instantiates a new Cat fact.
    *
    * @param fact the fact
    */
-public CatFact(String fact) {
+  public CatFact(String fact) {
     this.fact = fact;
   }
 
@@ -94,7 +98,7 @@ public CatFact(String fact) {
    *
    * @return the cat
    */
-public Cat getCat() {
+  public Cat getCat() {
     return cat;
   }
 

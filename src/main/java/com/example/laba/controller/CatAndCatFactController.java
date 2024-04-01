@@ -8,11 +8,16 @@ import com.example.laba.service.FactService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * The type Cat and cat fact controller.
- */
+/** The type Cat and cat fact controller. */
 @RestController
 @RequestMapping("/list")
 @Tag(name = "Cat and Fact", description = "API to manipulate  cat and fact")
@@ -27,7 +32,7 @@ public class CatAndCatFactController {
    * @param factService the fact service
    * @param catService the cat service
    */
-public CatAndCatFactController(FactService factService, CatService catService) {
+  public CatAndCatFactController(FactService factService, CatService catService) {
     this.factService = factService;
     this.catService = catService;
   }
@@ -39,7 +44,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    * @param id the id
    * @return the cat fact
    */
-@PostMapping("/add-fact/{id}")
+  @PostMapping("/add-fact/{id}")
   @Operation(summary = "updates fact by id") // 2
   public CatFact addFact(@RequestBody CatFact catFact, @PathVariable Long id) {
     return factService.addFact(catFact, id);
@@ -51,7 +56,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    * @param cat the cat
    * @return the cat dto
    */
-@PostMapping("/add-cat")
+  @PostMapping("/add-cat")
   @Operation(summary = "updates fact by id") // 2
   public CatDto addToMyList(@RequestBody Cat cat) {
     return catService.addCat(cat);
@@ -64,7 +69,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    * @param catId the cat id
    * @return the cat
    */
-@PostMapping("/fact/{factId}/cat/{catId}")
+  @PostMapping("/fact/{factId}/cat/{catId}")
   @Operation(summary = "updates fact by id") // 2
   public Cat addFactToCat(@PathVariable Long factId, @PathVariable Long catId) {
     return catService.addFactToCat(factId, catId);
@@ -76,7 +81,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    * @param id the id
    * @return the list
    */
-@GetMapping("/find-cat-by-owner/{id}")
+  @GetMapping("/find-cat-by-owner/{id}")
   @Operation(summary = "updates fact by id") // 2
   public List<CatDto> findCatsByOwnerId(@PathVariable Long id) {
     return catService.findCatsByOwnerId(id);
@@ -87,7 +92,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    *
    * @return the cats
    */
-@GetMapping("/cats")
+  @GetMapping("/cats")
   @Operation(summary = "updates fact by id") // 2
   public List<CatDto> getCats() {
     return catService.getAllCat();
@@ -99,7 +104,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    * @param id the id
    * @return the cat by id
    */
-@GetMapping("/cat/{id}")
+  @GetMapping("/cat/{id}")
   @Operation(summary = "updates fact by id") // 2
   public CatDto getCatById(@PathVariable Long id) {
     return catService.getCat(id);
@@ -111,7 +116,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    * @param id the id
    * @return the fact
    */
-@GetMapping("/fact/{id}")
+  @GetMapping("/fact/{id}")
   public CatFact getFact(@PathVariable Long id) {
     return factService.getFact(id);
   }
@@ -121,7 +126,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    *
    * @return the facts
    */
-@GetMapping("/get-all-fact")
+  @GetMapping("/get-all-fact")
   @Operation(summary = "updates fact by id") // 2
   public List<CatFact> getFacts() {
     return factService.getFacts();
@@ -134,7 +139,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    * @param catFact the cat fact
    * @return the cat fact
    */
-@PutMapping("/update-fact/{id}")
+  @PutMapping("/update-fact/{id}")
   @Operation(summary = "updates fact by id") // 2
   public CatFact updateFact(@PathVariable Long id, @RequestBody CatFact catFact) {
     return factService.updateFact(id, catFact);
@@ -147,7 +152,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    * @param cat the cat
    * @return the cat dto
    */
-@PutMapping("/update-cat/{id}")
+  @PutMapping("/update-cat/{id}")
   @Operation(summary = "updates fact by id") // 2
   public CatDto updateCat(@PathVariable Long id, @RequestBody Cat cat) {
     return catService.updateCat(id, cat);
@@ -159,7 +164,7 @@ public CatAndCatFactController(FactService factService, CatService catService) {
    * @param id the id
    * @return the cat fact
    */
-@DeleteMapping("/delete-fact/{id}")
+  @DeleteMapping("/delete-fact/{id}")
   @Operation(summary = "updates fact by id") // 2
   public CatFact remove(@PathVariable Long id) {
     return factService.removeFact(id);

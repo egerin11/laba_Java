@@ -10,7 +10,7 @@ import java.util.Map;
  * @param <K> the type parameter
  * @param <V> the type parameter
  */
-public class LRUCache<K, V> {
+public class LruCache<K, V> {
   private final int capacity;
   private Map<K, V> cache;
   private LinkedList<K> keys;
@@ -20,7 +20,7 @@ public class LRUCache<K, V> {
    *
    * @param size the size
    */
-  public LRUCache(int size) {
+  public LruCache(int size) {
     this.capacity = size;
     this.cache = new HashMap<>();
     this.keys = new LinkedList<>();

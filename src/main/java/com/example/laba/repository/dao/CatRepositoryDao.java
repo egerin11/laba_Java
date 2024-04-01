@@ -3,16 +3,13 @@ package com.example.laba.repository.dao;
 import com.example.laba.model.Cat;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-/**
- * The interface Cat repository dao.
- */
+/** The interface Cat repository dao. */
 @Repository
 @Hidden
 public interface CatRepositoryDao extends JpaRepository<Cat, Long> {

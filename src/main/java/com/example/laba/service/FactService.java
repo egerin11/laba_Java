@@ -5,17 +5,14 @@ import com.example.laba.model.CatFact;
 import com.example.laba.repository.dao.CatFactRepository;
 import com.example.laba.repository.dao.CatRepositoryDao;
 import io.swagger.v3.oas.annotations.Hidden;
+import java.util.List;
+import java.util.stream.StreamSupport;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.StreamSupport;
-
-/**
- * The type Fact service.
- */
+/** The type Fact service. */
 @Service
 @Hidden
 public class FactService {
@@ -29,7 +26,7 @@ public class FactService {
    * @param listFactRepository the list fact repository
    * @param catRepositoryDao the cat repository dao
    */
-@Autowired
+  @Autowired
   public FactService(CatFactRepository listFactRepository, CatRepositoryDao catRepositoryDao) {
     this.listFactRepository = listFactRepository;
     this.catRepositoryDao = catRepositoryDao;
@@ -42,7 +39,7 @@ public class FactService {
    * @param id the id
    * @return the cat fact
    */
-public CatFact addFact(@NotNull CatFact catFact, Long id) {
+  public CatFact addFact(@NotNull CatFact catFact, Long id) {
     Cat cat = catRepositoryDao.findById(id).orElse(null);
     catFact.setCat(cat);
     return listFactRepository.save(catFact);
@@ -53,7 +50,7 @@ public CatFact addFact(@NotNull CatFact catFact, Long id) {
    *
    * @return the facts
    */
-public List<CatFact> getFacts() {
+  public List<CatFact> getFacts() {
     return StreamSupport.stream(listFactRepository.findAll().spliterator(), false).toList();
   }
 
@@ -63,7 +60,7 @@ public List<CatFact> getFacts() {
    * @param id the id
    * @return the fact
    */
-public CatFact getFact(Long id) {
+  public CatFact getFact(Long id) {
     return listFactRepository
         .findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Cat not found with id :" + id));
@@ -75,7 +72,7 @@ public CatFact getFact(Long id) {
    * @param id the id
    * @return the cat fact
    */
-public CatFact removeFact(Long id) {
+  public CatFact removeFact(Long id) {
     CatFact catFact = getFact(id);
     listFactRepository.delete(catFact);
     return catFact;

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/** The type Api error. */
 @Getter
 @Setter
 @AllArgsConstructor
