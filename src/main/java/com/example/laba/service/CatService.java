@@ -81,11 +81,49 @@ public class CatService implements CatInterface {
       catInterface.save(savedCat);
     }
 
-    return mapper.map(savedCat, CatDto.class);
+    return mapper.map(cat, CatDto.class);
+  }
+
+  @Override
+  public List<CatDto> addList(List<Cat> cats) {
+    return cats.stream()
+        .map(
+            cat -> {
+              Cat newCat = new Cat();
+              newCat.setName(cat.getName());
+              newCat.setAge(cat.getAge());
+              Cat savedCat = catInterface.save(newCat);
+
+              if (cat.getFacts() != null) {
+                cat.getFacts()
+                    .forEach(
+                        fact -> {
+                          fact.setCat(savedCat);
+                          catFactRepository.save(fact);
+                        });
+              }
+
+              if (cat.getOwners() != null) {
+                cat.getOwners()
+                    .forEach(
+                        owner -> {
+                          Owner existingOwner = ownerRepository.findByName(owner.getName());
+                          if (existingOwner == null) {
+                            existingOwner = ownerRepository.save(owner);
+                          }
+                          savedCat.addOwner(existingOwner);
+                        });
+                catInterface.save(savedCat);
+              }
+
+              return mapper.map(cat, CatDto.class);
+            })
+        .toList();
   }
 
   @Override
   public CatDto getCat(Long id) {
+    catCache.displayCache();
     CatDto catDto = catCache.get(id);
     if (catDto == null) {
       Cat cat =

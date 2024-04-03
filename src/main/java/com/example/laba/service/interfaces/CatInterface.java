@@ -62,4 +62,12 @@ public interface CatInterface {
    * @return the list
    */
   List<CatDto> findCatsByOwnerId(Long id);
+
+  /**
+   * Add list list.
+   *
+   * @param cats the cats
+   * @return the list
+   */
+  List<CatDto> addList(List<Cat> cats);
 }

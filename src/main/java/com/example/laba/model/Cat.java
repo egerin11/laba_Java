@@ -42,6 +42,7 @@ public class Cat {
     owner.getCats().remove(this);
   }
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

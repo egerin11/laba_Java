@@ -50,6 +50,11 @@ public class CatAndCatFactController {
     return factService.addFact(catFact, id);
   }
 
+  @PostMapping("/add-list")
+  public List<CatDto> addList(@RequestBody List<Cat> cats) {
+    return catService.addList(cats);
+  }
+
   /**
    * Add to my list cat dto.
    *
