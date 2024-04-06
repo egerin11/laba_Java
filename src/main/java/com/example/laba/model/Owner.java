@@ -18,6 +18,8 @@ public class Owner {
 
   private String name;
 
+
+
   @ManyToMany(mappedBy = "owners")
   private Set<Cat> cats = new HashSet<>();
 

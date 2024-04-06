@@ -15,5 +15,11 @@ import lombok.Setter;
 public class OwnerDto {
   private Long id;
   private String name;
+
+  public OwnerDto(Long id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
   @JsonBackReference private List<CatDto> cats;
 }

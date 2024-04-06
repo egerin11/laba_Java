@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Hidden
 public class CatService implements CatInterface {
 
-  private final CatRepositoryDao catInterface;
+  private final CatRepositoryDao catRepositoryDao;
   private final CatFactRepository catFactRepository;
   private final FactService factService;
   private final OwnerRepository ownerRepository;
@@ -34,7 +34,7 @@ public class CatService implements CatInterface {
   /**
    * Instantiates a new Cat service.
    *
-   * @param catInterface the cat interface
+   * @param catRepositoryDao the cat interface
    * @param catFactRepository the cat fact repository
    * @param factService the fact service
    * @param ownerRepository the owner repository
@@ -42,12 +42,12 @@ public class CatService implements CatInterface {
    */
   @Autowired
   public CatService(
-      CatRepositoryDao catInterface,
+      CatRepositoryDao catRepositoryDao,
       CatFactRepository catFactRepository,
       FactService factService,
       OwnerRepository ownerRepository,
       ModelMapper mapper) {
-    this.catInterface = catInterface;
+    this.catRepositoryDao = catRepositoryDao;
     this.catFactRepository = catFactRepository;
     this.factService = factService;
     this.ownerRepository = ownerRepository;
@@ -61,7 +61,7 @@ public class CatService implements CatInterface {
     newCat.setName(cat.getName());
     newCat.setAge(cat.getAge());
 
-    Cat savedCat = catInterface.save(newCat);
+    Cat savedCat = catRepositoryDao.save(newCat);
 
     if (cat.getFacts() != null) {
       for (CatFact fact : cat.getFacts()) {
@@ -78,7 +78,7 @@ public class CatService implements CatInterface {
         }
         savedCat.addOwner(existingOwner);
       }
-      catInterface.save(savedCat);
+      catRepositoryDao.save(savedCat);
     }
 
     return mapper.map(cat, CatDto.class);
@@ -92,7 +92,7 @@ public class CatService implements CatInterface {
               Cat newCat = new Cat();
               newCat.setName(cat.getName());
               newCat.setAge(cat.getAge());
-              Cat savedCat = catInterface.save(newCat);
+              Cat savedCat = catRepositoryDao.save(newCat);
 
               if (cat.getFacts() != null) {
                 cat.getFacts()
@@ -113,7 +113,7 @@ public class CatService implements CatInterface {
                           }
                           savedCat.addOwner(existingOwner);
                         });
-                catInterface.save(savedCat);
+                catRepositoryDao.save(savedCat);
               }
 
               return mapper.map(cat, CatDto.class);
@@ -127,7 +127,7 @@ public class CatService implements CatInterface {
     CatDto catDto = catCache.get(id);
     if (catDto == null) {
       Cat cat =
-          catInterface
+          catRepositoryDao
               .findById(id)
               .orElseThrow(() -> new ResourceNotFoundException("Cat not found"));
       catDto = mapper.map(cat, CatDto.class);
@@ -138,14 +138,14 @@ public class CatService implements CatInterface {
 
   @Override
   public List<CatDto> getAllCat() {
-    return StreamSupport.stream(catInterface.findAll().spliterator(), false)
+    return StreamSupport.stream(catRepositoryDao.findAll().spliterator(), false)
         .map(cat -> mapper.map(cat, CatDto.class))
         .toList();
   }
 
   @Override
   public String removeCat(Long id) {
-    catInterface.deleteById(id);
+    catRepositoryDao.deleteById(id);
     catCache.remove(id);
     return "delete";
   }
@@ -157,7 +157,9 @@ public class CatService implements CatInterface {
     }
 
     Cat existingCat =
-        catInterface.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cat not found"));
+        catRepositoryDao
+            .findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Cat not found"));
 
     existingCat.setName(cat.getName());
     existingCat.setAge(cat.getAge());
@@ -169,7 +171,7 @@ public class CatService implements CatInterface {
           ownerRepository.save(owner);
         }
       }
-      catInterface.save(existingCat);
+      catRepositoryDao.save(existingCat);
     }
 
     if (cat.getFacts() != null) {
@@ -195,7 +197,7 @@ public class CatService implements CatInterface {
     if (!cat.getFacts().contains(fact)) {
       cat.getFacts().add(fact);
       fact.setCat(cat);
-      catInterface.save(cat);
+      catRepositoryDao.save(cat);
       catFactRepository.save(fact);
       catCache.put(catId, mapper.map(cat, CatDto.class));
     }
@@ -204,7 +206,7 @@ public class CatService implements CatInterface {
 
   @Override
   public List<CatDto> findCatsByOwnerId(Long id) {
-    return StreamSupport.stream(catInterface.findCatsByOwnerId(id).spliterator(), false)
+    return StreamSupport.stream(catRepositoryDao.findCatsByOwnerId(id).spliterator(), false)
         .map(cat -> mapper.map(cat, CatDto.class))
         .toList();
   }

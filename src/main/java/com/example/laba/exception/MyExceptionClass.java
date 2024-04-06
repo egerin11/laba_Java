@@ -6,6 +6,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +30,7 @@ public class MyExceptionClass {
   })
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ResponseBody
-  public ResponseEntity<ApiError> handleBadRequestException(RuntimeException e) {
+  public ResponseEntity<ApiError> handleBadRequestException(MethodArgumentNotValidException e) {
     String errorMessage = "bad request: " + e.getMessage();
     log.error(errorMessage);
     ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST.value(), errorMessage);

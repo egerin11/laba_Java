@@ -89,11 +89,16 @@ public class OwnerService implements OwnerInterface {
 
   @Override
   public Owner deleteCatToOwner(Long catId, Long ownerId) {
-    Cat cat = catRepositoryDao.findById(catId).orElse(null);
-    Owner owner = getOwner(ownerId);
-    if (cat != null) {
-      cat.removeOwner(owner);
-    }
+    Cat cat =
+        catRepositoryDao
+            .findById(catId)
+            .orElseThrow(() -> new ResourceNotFoundException("Cat not found"));
+    Owner owner =
+        ownerRepository
+            .findById(ownerId)
+            .orElseThrow(() -> new ResourceNotFoundException("Owner not found"));
+    cat.removeOwner(owner);
+    catRepositoryDao.save(cat);
     ownerRepository.save(owner);
     return owner;
   }

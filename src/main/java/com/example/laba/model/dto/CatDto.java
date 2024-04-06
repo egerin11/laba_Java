@@ -16,6 +16,11 @@ public class CatDto {
   private Long id;
   private String name;
   private Integer age;
+
+  public CatDto(String name) {
+    this.name = name;
+  }
+
   @JsonManagedReference private List<CatFactDto> facts;
   @JsonManagedReference private List<OwnerDto> owners;
 }

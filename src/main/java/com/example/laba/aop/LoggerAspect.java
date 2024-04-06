@@ -1,5 +1,6 @@
 package com.example.laba.aop;
 
+import com.example.laba.service.CounterService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -32,6 +33,24 @@ public class LoggerAspect {
       return result;
     } catch (Exception e) {
       log.error("Exception in service method: {}.{}", className, methodName, e);
+      throw e;
+    }
+  }
+
+  @Around("PointCuts.allMethodsFromController()")
+  public Object logControllerMethods(ProceedingJoinPoint joinPoint) throws Throwable {
+    String className = joinPoint.getTarget().getClass().getSimpleName();
+    String methodName = joinPoint.getSignature().getName();
+
+    log.info("Entering controller method: {}.{}", className, methodName);
+    CounterService.incrementRequestCount();
+    log.info("количество {}",CounterService.getRequestCount());
+    try {
+      Object result = joinPoint.proceed();
+      log.info("Exiting controller method: {}.{}", className, methodName);
+      return result;
+    } catch (Exception e) {
+      log.error("Exception in controller method: {}.{}", className, methodName, e);
       throw e;
     }
   }
