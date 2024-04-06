@@ -13,15 +13,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class TestCatService {
   @Mock private CatRepositoryDao catRepositoryDao;
   @Mock private ModelMapper mapper;
@@ -41,8 +39,6 @@ class TestCatService {
 
     when(catRepositoryDao.findById(1L)).thenReturn(Optional.of(cat));
     when(mapper.map(cat, CatDto.class)).thenReturn(expectedCatDto);
-
-    when(catService.getCat(1L)).thenReturn(expectedCatDto);
 
     CatDto testCatDto = catService.getCat(1L);
 
@@ -93,6 +89,4 @@ class TestCatService {
     assertEquals("Fluffy", result.get(0).getName());
     assertEquals("Whiskers", result.get(1).getName());
   }
-
-
 }

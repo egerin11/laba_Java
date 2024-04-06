@@ -43,11 +43,12 @@ public class LoggerAspect {
     String methodName = joinPoint.getSignature().getName();
 
     log.info("Entering controller method: {}.{}", className, methodName);
-    CounterService.incrementRequestCount();
-    log.info("количество {}",CounterService.getRequestCount());
+
     try {
       Object result = joinPoint.proceed();
+      CounterService.incrementRequestCount();
       log.info("Exiting controller method: {}.{}", className, methodName);
+      log.info("количество {}",CounterService.getRequestCount());
       return result;
     } catch (Exception e) {
       log.error("Exception in controller method: {}.{}", className, methodName, e);
