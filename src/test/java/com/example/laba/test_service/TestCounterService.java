@@ -1,13 +1,28 @@
 package com.example.laba.test_service;
 
-import static org.junit.Assert.assertEquals;
-
 import com.example.laba.service.CounterService;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.Assert.*;
+
 class CounterServiceTest {
+  @Test
+  void testDataAnnotation() {
+    CounterService service = CounterService.getInstance();
+    String toString = service.toString();
+    boolean equals = service.equals(service);
+    assertNotNull(toString);
+    assertTrue(equals);
+  }
+
+  @Test
+  void testGettersAndSetters() {
+    CounterService service = CounterService.getInstance();
+
+    int requestCount = service.getRequestCount();
+
+    assertEquals(0, requestCount);
+  }
 
   @Test
   void testIncrementRequestCount() {
@@ -30,7 +45,6 @@ class CounterServiceTest {
 
     assertEquals(initialCount + 2, currentCount);
   }
-
 
   @Test
   void testSingleton() {
