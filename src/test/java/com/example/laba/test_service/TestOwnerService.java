@@ -111,6 +111,34 @@ class TestOwnerService {
   }
 
   @Test
+  void testAddOwner() {
+
+    Owner owner = new Owner();
+    owner.setName("John Doe");
+    Cat cat1 = new Cat();
+    cat1.setId(null);
+    Cat cat2 = new Cat();
+    cat2.setId(null);
+    owner.getCats().add(cat1);
+    owner.getCats().add(cat2);
+
+    Owner savedOwner = new Owner();
+    savedOwner.setId(1L);
+    savedOwner.setName("John Doe");
+    savedOwner.getCats().add(cat1);
+    savedOwner.getCats().add(cat2);
+
+    when(catRepositoryDao.save(cat1)).thenReturn(cat1);
+    when(catRepositoryDao.save(cat2)).thenReturn(cat2);
+    when(ownerRepository.save(any(Owner.class))).thenReturn(savedOwner);
+
+    Owner result = ownerService.addOwner(owner);
+
+    assertNotNull(result);
+    assertEquals(savedOwner, result);
+  }
+
+  @Test
   void testDeleteCatToOwner() {
     Long catId = 1L;
     Long ownerId = 1L;
