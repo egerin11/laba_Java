@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 /** The type My exception class. */
 @ControllerAdvice
@@ -43,7 +44,7 @@ public class MyExceptionClass {
    * @param ex the ex
    * @return the response entity
    */
-  @ExceptionHandler(ResourceNotFoundException.class)
+  @ExceptionHandler({ResourceNotFoundException.class, NoHandlerFoundException.class})
   @ResponseStatus(HttpStatus.NOT_FOUND)
   @ResponseBody
   public ResponseEntity<ApiError> handleNoHandlerFoundException(ResourceNotFoundException ex) {

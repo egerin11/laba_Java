@@ -12,6 +12,32 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Slf4j
 public class LoggerAspect {
+  /**
+   * Log controller methods object.
+   *
+   * @param joinPoint the join point
+   * @return the object
+   * @throws Throwable the throwable
+   */
+  @Around("PointCuts.allMethodsFromController()")
+  public Object logControllerMethods(ProceedingJoinPoint joinPoint) throws Throwable {
+    String className = joinPoint.getTarget().getClass().getSimpleName();
+    String methodName = joinPoint.getSignature().getName();
+
+    log.info("Entering controller method: {}.{}", className, methodName);
+
+    try {
+      CounterService.incrementRequestCount();
+      Object result = joinPoint.proceed();
+
+      log.info("Exiting controller method: {}.{}", className, methodName);
+      log.info("количество {}", CounterService.getRequestCount());
+      return result;
+    } catch (Exception e) {
+      log.error("Exception in controller method: {}.{}", className, methodName, e);
+      throw e;
+    }
+  }
 
   /**
    * Log service methods object.
@@ -33,25 +59,6 @@ public class LoggerAspect {
       return result;
     } catch (Exception e) {
       log.error("Exception in service method: {}.{}", className, methodName, e);
-      throw e;
-    }
-  }
-
-  @Around("PointCuts.allMethodsFromController()")
-  public Object logControllerMethods(ProceedingJoinPoint joinPoint) throws Throwable {
-    String className = joinPoint.getTarget().getClass().getSimpleName();
-    String methodName = joinPoint.getSignature().getName();
-
-    log.info("Entering controller method: {}.{}", className, methodName);
-
-    try {
-      Object result = joinPoint.proceed();
-      CounterService.incrementRequestCount();
-      log.info("Exiting controller method: {}.{}", className, methodName);
-      log.info("количество {}",CounterService.getRequestCount());
-      return result;
-    } catch (Exception e) {
-      log.error("Exception in controller method: {}.{}", className, methodName, e);
       throw e;
     }
   }
