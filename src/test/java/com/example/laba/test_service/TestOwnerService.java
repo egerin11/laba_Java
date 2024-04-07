@@ -3,8 +3,10 @@ package com.example.laba.test_service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import com.example.laba.model.Cat;
 import com.example.laba.model.Owner;
 import com.example.laba.model.dto.OwnerDto;
+import com.example.laba.repository.dao.CatRepositoryDao;
 import com.example.laba.repository.dao.OwnerRepository;
 import com.example.laba.service.OwnerService;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ class TestOwnerService {
 
   @Mock private OwnerRepository ownerRepository;
   @Mock private ModelMapper mapper;
+  @Mock private CatRepositoryDao catRepositoryDao;
   @InjectMocks private OwnerService ownerService;
 
   @Test
@@ -105,5 +108,64 @@ class TestOwnerService {
 
     assertEquals(updatedOwner, result);
     verify(ownerRepository, times(1)).save(existingOwner);
+  }
+
+  @Test
+  void testDeleteCatToOwner() {
+    Long catId = 1L;
+    Long ownerId = 1L;
+
+    Cat cat = new Cat();
+    cat.setId(catId);
+    Owner owner = new Owner();
+    owner.setId(ownerId);
+    owner.getCats().add(cat);
+
+    when(catRepositoryDao.findById(catId)).thenReturn(Optional.of(cat));
+    when(ownerRepository.findById(ownerId)).thenReturn(Optional.of(owner));
+    when(ownerRepository.save(any(Owner.class))).thenReturn(owner);
+    when(catRepositoryDao.save(any(Cat.class))).thenReturn(cat);
+
+    Owner result = ownerService.deleteCatToOwner(catId, ownerId);
+
+    assertNotNull(result);
+    assertTrue(result.getCats().isEmpty());
+    verify(catRepositoryDao, times(1)).findById(catId);
+    verify(ownerRepository, times(1)).findById(ownerId);
+    verify(ownerRepository, times(1)).save(any(Owner.class));
+    verify(catRepositoryDao, times(1)).save(any(Cat.class));
+  }
+
+  @Test
+  void testDeleteCatToOwnerCatNotFound() {
+    Long catId = 1L;
+    Long ownerId = 1L;
+
+    when(catRepositoryDao.findById(catId)).thenReturn(Optional.empty());
+
+    assertThrows(
+        ResourceNotFoundException.class, () -> ownerService.deleteCatToOwner(catId, ownerId));
+    verify(catRepositoryDao, times(1)).findById(catId);
+    verify(ownerRepository, never()).findById(ownerId);
+    verify(ownerRepository, never()).save(any(Owner.class));
+    verify(catRepositoryDao, never()).save(any(Cat.class));
+  }
+
+  @Test
+  void testDeleteCatToOwnerOwnerNotFound() {
+    Long catId = 1L;
+    Long ownerId = 1L;
+
+    Cat cat = new Cat();
+    cat.setId(catId);
+    when(catRepositoryDao.findById(catId)).thenReturn(Optional.of(cat));
+    when(ownerRepository.findById(ownerId)).thenReturn(Optional.empty());
+
+    assertThrows(
+        ResourceNotFoundException.class, () -> ownerService.deleteCatToOwner(catId, ownerId));
+    verify(catRepositoryDao, times(1)).findById(catId);
+    verify(ownerRepository, times(1)).findById(ownerId);
+    verify(ownerRepository, never()).save(any(Owner.class));
+    verify(catRepositoryDao, never()).save(any(Cat.class));
   }
 }
