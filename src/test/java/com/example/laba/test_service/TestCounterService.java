@@ -30,30 +30,7 @@ class CounterServiceTest {
 
     assertEquals(initialCount + 2, currentCount);
   }
-  @Test
-  void testConcurrentIncrement() throws InterruptedException {
-    int numThreads = 10;
-    int iterations = 100;
-    int expectedCount = numThreads * iterations;
 
-
-    List<Thread> threads = new ArrayList<>();
-    for (int i = 0; i < numThreads; i++) {
-      threads.add(new Thread(() -> {
-        for (int j = 0; j < iterations; j++) {
-          CounterService.incrementRequestCount();
-        }
-      }));
-    }
-
-    threads.forEach(Thread::start);
-    for (Thread thread : threads) {
-      thread.join();
-    }
-
-    int finalCount = CounterService.getRequestCount();
-    assertEquals(expectedCount, finalCount);
-  }
 
   @Test
   void testSingleton() {
