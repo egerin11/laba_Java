@@ -1,7 +1,9 @@
 package com.example.laba.service;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import lombok.Data;
 
+@Data
 public class CounterService {
 
   private CounterService() {}
