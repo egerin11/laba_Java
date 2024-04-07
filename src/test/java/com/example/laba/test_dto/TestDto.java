@@ -14,6 +14,29 @@ import org.junit.jupiter.api.Test;
 class TestDto {
 
   @Test
+  void testCatFactDtoSerialization() throws JsonProcessingException {
+    CatFactDto catFactDto = new CatFactDto(1L, "Cats have excellent night vision.");
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    String json = objectMapper.writeValueAsString(catFactDto);
+
+    assertTrue(json.contains("\"id\":1"));
+    assertTrue(json.contains("\"fact\":\"Cats have excellent night vision.\""));
+  }
+
+  @Test
+  void testCatFactDtoDeserialization() throws JsonProcessingException {
+
+    String json = "{\"id\":1,\"fact\":\"Cats have excellent night vision.\"}";
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    CatFactDto catFactDto = objectMapper.readValue(json, CatFactDto.class);
+
+    assertEquals(1L, catFactDto.getId());
+    assertEquals("Cats have excellent night vision.", catFactDto.getFact());
+  }
+
+  @Test
   void testCatDtoSerialization() throws JsonProcessingException {
     CatDto catDto = new CatDto(1L, "Whiskers", 5);
     List<CatFactDto> facts = new ArrayList<>();
@@ -29,7 +52,6 @@ class TestDto {
     ObjectMapper objectMapper = new ObjectMapper();
     String json = objectMapper.writeValueAsString(catDto);
 
-    // Then
     assertTrue(json.contains("\"id\":1"));
     assertTrue(json.contains("\"name\":\"Whiskers\""));
     assertTrue(json.contains("\"age\":5"));
@@ -40,14 +62,5 @@ class TestDto {
   }
 
 
-  @Test
-  void testCatFactDtoSerialization() throws JsonProcessingException {
-    CatFactDto catFactDto = new CatFactDto(1L, "Cats have excellent night vision.");
 
-    ObjectMapper objectMapper = new ObjectMapper();
-    String json = objectMapper.writeValueAsString(catFactDto);
-
-    assertTrue(json.contains("\"id\":1"));
-    assertTrue(json.contains("\"fact\":\"Cats have excellent night vision.\""));
-  }
 }
