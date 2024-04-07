@@ -13,6 +13,4 @@ import lombok.Setter;
 public class ApiError {
   private Integer errorCode;
   private String errorMessage;
-
-
 }
