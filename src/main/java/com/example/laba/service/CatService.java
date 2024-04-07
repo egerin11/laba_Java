@@ -123,7 +123,6 @@ public class CatService implements CatInterface {
 
   @Override
   public CatDto getCat(Long id) {
-    catCache.displayCache();
     CatDto catDto = catCache.get(id);
     if (catDto == null) {
       Cat cat =

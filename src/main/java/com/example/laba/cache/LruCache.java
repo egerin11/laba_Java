@@ -70,12 +70,4 @@ public class LruCache<K, V> {
       cache.remove(key);
     }
   }
-
-  /** Display cache. */
-  public void displayCache() {
-    System.out.println("LRUCache contents:");
-    for (K key : keys) {
-      System.out.println(key.toString() + ": " + cache.get(key));
-    }
-  }
 }

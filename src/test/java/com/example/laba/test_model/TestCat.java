@@ -14,30 +14,29 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CatTest {
-    @Mock
-    private Owner owner;
+  @Mock private Owner owner;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+  }
 
-    @Test
-    void testAddOwner() {
-        Cat cat = new Cat();
-        cat.addOwner(owner);
+  @Test
+  void testAddOwner() {
+    Cat cat = new Cat();
+    cat.addOwner(owner);
 
-        verify(owner, times(1)).getCats();
-        assertTrue(cat.getOwners().contains(owner));
-    }
+    verify(owner, times(1)).getCats();
+    assertTrue(cat.getOwners().contains(owner));
+  }
 
-    @Test
-    void testRemoveOwner() {
-        Cat cat = new Cat();
-        cat.addOwner(owner);
-        cat.removeOwner(owner);
+  @Test
+  void testRemoveOwner() {
+    Cat cat = new Cat();
+    cat.addOwner(owner);
+    cat.removeOwner(owner);
 
-        verify(owner, times(2)).getCats();
-        assertTrue(cat.getOwners().isEmpty());
-    }
+    verify(owner, times(2)).getCats();
+    assertTrue(cat.getOwners().isEmpty());
+  }
 }
